@@ -3,8 +3,6 @@ package main
 import (
 	"data-worker/workers"
 	"fmt"
-
-	"./workers"
 )
 
 func main() {

@@ -1,9 +1,16 @@
 package main
 
-import "fmt"
+import (
+	"data-worker/workers"
+	"fmt"
+
+	"./workers"
+)
 
 func main() {
 
-	fmt.Println("Hello")
+	workers.Seed(0)
+	num := workers.Number(1, 99)
+	fmt.Println(num)
 
 }

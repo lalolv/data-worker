@@ -1,0 +1,19 @@
+{
+  "count": 10,
+  "format":"json",
+  "path":"out",
+  "fields": [
+    {
+      "name":"id",
+      "type":"uuid"
+    },
+    {
+      "name":"name",
+      "type":"string"
+    },
+    {
+      "name":"creat_dt",
+      "type":"datetime"
+    }
+  ]
+}

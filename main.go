@@ -1,8 +1,9 @@
 package main
 
 import (
-	"data-worker/workers"
 	"fmt"
+
+	"github.com/lalolv/data-worker/workers"
 )
 
 func main() {

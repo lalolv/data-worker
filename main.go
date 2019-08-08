@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"flag"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -15,14 +16,18 @@ import (
 
 func main() {
 
+	// Set rand seed
 	workers.Seed(0)
-	num := workers.Number(1, 99)
-	fmt.Println(num)
+
+	// Get c flag
+	cfg := flag.String("c", "", "the config")
+	flag.Parse()
+	fmt.Println(*cfg)
 
 	// add driver for support yaml content
 	// config.AddDriver(json.Driver)
 	// Load json file
-	err := config.LoadFiles("config/demo1.json")
+	err := config.LoadFiles(*cfg)
 	if err != nil {
 		panic(err)
 	}

@@ -25,18 +25,18 @@ func main() {
 
 	// Get some basic params
 	// format, _ := config.String("format")
-	fileName, _ := config.String("file_name")
-	filePath, _ := config.String("file_path")
+	// fileName, _ := config.String("file_name")
+	// filePath, _ := config.String("file_path")
 	count, _ := config.Int("count")
 
 	// Get all fields
-	fields, _ := config.Get("fields")
+	// fields, _ := config.Get("fields")
 
 	// Read dict
-	userNames := handler.ReadLines([]int{3, 6, 10}, "./dict/usernames.txt")
+	userNames := handler.ReadLines(float64(count), 61.00, "./dict/demo.txt")
 	fmt.Println(userNames)
 
 	// Build json file
-	handler.Build(filePath, fileName, count, fields.([]interface{}))
+	// handler.Build(filePath, fileName, count, fields.([]interface{}))
 
 }

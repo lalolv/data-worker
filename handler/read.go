@@ -1,42 +1,67 @@
 package handler
 
 import (
-	"encoding/csv"
+	"bufio"
 	"fmt"
-	"io"
+	"math"
 	"os"
+	"time"
+
+	"github.com/gookit/gcli/v2/progress"
+	"github.com/lalolv/data-worker/workers"
 )
 
 // ReadLines Read a few line
-func ReadLines(lines []int, path string) []string {
-	file, err := os.Open(path)
+// @reCount return count
+// @rowCount dict file row count
+func ReadLines(reCount, rowCount float64, path string) []string {
+	// open file
+	ff, err := os.Open(path)
 	if err != nil {
 		fmt.Println("Read file err: ", err.Error())
 		return []string{}
 	}
-	defer file.Close()
-	r := csv.NewReader(file)
-	r.Read()
+	defer ff.Close()
+
+	// a block count
+	b0 := 0
+	bn := int(math.Floor(rowCount / reCount))
+	// rand index
+	workers.Seed(0)
+	index := workers.Number(b0, b0+bn)
+
+	// scan line
+	scanner := bufio.NewScanner(ff)
+
+	// progress bar
+	p := progress.Bar(int(rowCount))
+	p.Start()
+
 	// return list
 	var list []string
-	var line, index int
-	for {
-		lineText, err := r.Read()
-		if err != nil {
-			if err != io.EOF {
-				fmt.Println("Read file's content err: ", err.Error())
-			}
-			break
-		}
-		if lines[index] == line {
-			list = append(list, lineText...)
-			index++
-			if index >= len(lines) {
+	var line int
+	for scanner.Scan() {
+		lineText := scanner.Text()
+		// append text to list
+		if index == line {
+			list = append(list, lineText)
+			// break
+			if int(reCount) == len(list) {
 				break
 			}
+			// update index
+			b0 += bn + 1
+			// rand index
+			workers.Seed(0)
+			index = workers.Number(b0, b0+bn)
 		}
+
 		line++
+		time.Sleep(time.Millisecond * 100)
+		p.Advance()
 	}
+
+	p.Finish()
 
 	return list
 }

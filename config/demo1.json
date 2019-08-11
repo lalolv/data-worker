@@ -3,6 +3,7 @@
   "format": "json",
   "file_name": "demo",
   "file_path": "out",
+  "dict_path": "dict",
   "fields": [
     {
       "name": "id",

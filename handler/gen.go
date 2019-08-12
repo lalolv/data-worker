@@ -16,26 +16,33 @@ func CheckPathIsExist(path string) bool {
 }
 
 // GenRow Generate a row data
-func GenRow(fields []interface{}) map[string]interface{} {
-	// Set rand seed
-	workers.Seed(0)
-
+func GenRow(index int, fields []interface{}) map[string]interface{} {
 	row := map[string]interface{}{}
 	for _, v := range fields {
+		val := ""
 		// Handle a field
 		field, ok := v.(map[string]interface{})
 		if ok {
-			val := ""
-			switch field["type"].(string) {
-			case "string":
-				// gen rand string
-				val = workers.Letter()
-			case "uuid":
-				//
-				val = workers.UUID()
-			case "datetime":
-				//
-				val = workers.Date().Format("2006-01-02 15:04:05")
+			// Use dict data
+			if _, ok = field["dict"]; ok {
+				if dataColl, ok := dictData[field["name"].(string)]; ok {
+					val = dataColl[index]
+				}
+			} else {
+				// Set rand seed
+				workers.Seed(0)
+				// Get rand by type
+				switch field["type"].(string) {
+				case "string":
+					// gen rand string
+					val = workers.Letter()
+				case "uuid":
+					// uuid
+					val = workers.UUID()
+				case "datetime":
+					// datatime
+					val = workers.Date().Format("2006-01-02 15:04:05")
+				}
 			}
 
 			// append to row

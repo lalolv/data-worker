@@ -2,18 +2,17 @@ package main
 
 import (
 	"flag"
-	"fmt"
 
 	"github.com/gookit/config"
 
 	"github.com/lalolv/data-worker/handler"
+	"github.com/lalolv/goutil"
 )
 
 func main() {
 	// Get c flag
 	cfg := flag.String("c", "", "the config")
 	flag.Parse()
-	fmt.Println(*cfg)
 
 	// add driver for support yaml content
 	// config.AddDriver(json.Driver)
@@ -23,20 +22,20 @@ func main() {
 		panic(err)
 	}
 
+	// Get dict path
+	dictPath, _ := config.String("dict_path")
+	// Get build config
+	buildInfo, _ := config.StringMap("build")
 	// Get some basic params
-	// format, _ := config.String("format")
-	// fileName, _ := config.String("file_name")
-	// filePath, _ := config.String("file_path")
-	count, _ := config.Int("count")
+	buildCount := goutil.Str2Int(buildInfo["count"])
 
 	// Get all fields
-	// fields, _ := config.Get("fields")
+	fields, _ := config.Get("fields")
 
-	// Read dict
-	userNames := handler.ReadLines(float64(count), 61.00, "./dict/demo.txt")
-	fmt.Println(userNames)
+	// Load dict data by fields
+	handler.LoadDicts(fields.([]interface{}), float64(buildCount), dictPath)
 
 	// Build json file
-	// handler.Build(filePath, fileName, count, fields.([]interface{}))
+	handler.Build(buildInfo["path"], buildInfo["name"], buildCount, fields.([]interface{}))
 
 }

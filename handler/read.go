@@ -11,6 +11,29 @@ import (
 	"github.com/lalolv/data-worker/workers"
 )
 
+// LoadDicts Load dict by fields
+func LoadDicts(fields []interface{}, reCount float64, dictPath string) {
+	dictData = map[string][]string{}
+	// for each field
+	for _, v := range fields {
+		val, ok := v.(map[string]interface{})
+		if ok {
+			if dict, ok := val["dict"]; ok {
+				fmt.Println("dict", dict)
+				// read data
+				fieldsName := val["name"].(string)
+				fmt.Println("Loading data for ", fieldsName)
+				dataColl := ReadLines(reCount, 61.00, fmt.Sprintf("./%s/%s.txt", dictPath, dict.(string)))
+				// Rand data
+				workers.ShuffleStrings(dataColl)
+				// Add to dict
+				dictData[fieldsName] = dataColl
+
+			}
+		}
+	}
+}
+
 // ReadLines Read a few line
 // @reCount return count
 // @rowCount dict file row count

@@ -20,7 +20,7 @@ func Build(filePath, fileName string, count int, fields []interface{}) {
 	// Add rows list
 	for i := 0; i < count; i++ {
 		// Generate a row data
-		row := GenRow(fields)
+		row := GenRow(i, fields)
 		rows = append(rows, row)
 		time.Sleep(time.Millisecond * 100)
 		p.Advance()

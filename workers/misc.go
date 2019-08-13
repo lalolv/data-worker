@@ -51,19 +51,19 @@ func replaceWithLetters(str string) string {
 }
 
 // Replace ? with ASCII lowercase letters between a and f
-func replaceWithHexLetters(str string) string {
-	if str == "" {
-		return str
-	}
-	bytestr := []byte(str)
-	for i := 0; i < len(bytestr); i++ {
-		if bytestr[i] == questionmark {
-			bytestr[i] = byte(randHexLetter())
-		}
-	}
-
-	return string(bytestr)
-}
+// func replaceWithHexLetters(str string) string {
+// 	if str == "" {
+// 		return str
+// 	}
+// 	bytestr := []byte(str)
+// 	for i := 0; i < len(bytestr); i++ {
+// 		if bytestr[i] == questionmark {
+// 			bytestr[i] = byte(randHexLetter())
+// 		}
+// 	}
+//
+// 	return string(bytestr)
+// }
 
 // Generate random lowercase ASCII letter
 func randLetter() rune {
@@ -71,9 +71,9 @@ func randLetter() rune {
 }
 
 // Generate random lowercase ASCII letter between a and f
-func randHexLetter() rune {
-	return rune(byte(rand.Intn(6)) + 'a')
-}
+// func randHexLetter() rune {
+// 	return rune(byte(rand.Intn(6)) + 'a')
+// }
 
 // Generate random ASCII digit
 func randDigit() rune {

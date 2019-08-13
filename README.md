@@ -1,14 +1,21 @@
-# data-worker
+# Overview
 
-Data generator, generate a lot data to use workers
+Data worker, data generator, generate a lot data by config.
 
-## How to use
+[中文说明](./README_ZH.md)
 
-## TODO
+## Where is for?
 
-- [ ] 生成输出进度条
-- [ ] 随机字符串
+- Data test
+- Demo
+- Unit Test for developing
 
-## PLan
+## Features
 
-- 使用字典，生成随机数据
+- [x] Define some specified fields and parameters by config.
+- [x] Load external dict to use more data.
+
+## Plan
+
+- Output cvs file
+- Suport generate email address

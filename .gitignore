@@ -13,3 +13,6 @@
 
 # Path
 out/*
+
+# Release
+release/*

@@ -1,41 +1,19 @@
 package main
 
 import (
-	"flag"
-
-	"github.com/gookit/config"
-
-	"github.com/lalolv/data-worker/handler"
-	"github.com/lalolv/goutil"
+	"github.com/gookit/gcli/v2"
+	"github.com/lalolv/data-worker/cmd"
 )
 
 func main() {
-	// Get c flag
-	cfg := flag.String("c", "", "the config")
-	flag.Parse()
+	// New app
+	app := gcli.NewApp()
+	app.Version = "0.1.1"
+	app.Description = "Data worker, data generation"
 
-	// add driver for support yaml content
-	// config.AddDriver(json.Driver)
-	// Load json file
-	err := config.LoadFiles(*cfg)
-	if err != nil {
-		panic(err)
-	}
+	// app.Add(cmd.ExampleCommand())
+	app.Add(cmd.BuildCommand())
 
-	// Get dict path
-	dictPath, _ := config.String("dict_path")
-	// Get build config
-	buildInfo, _ := config.StringMap("build")
-	// Get some basic params
-	buildCount := goutil.Str2Int(buildInfo["count"])
-
-	// Get all fields
-	fields, _ := config.Get("fields")
-
-	// Load dict data by fields
-	handler.LoadDicts(fields.([]interface{}), float64(buildCount), dictPath)
-
-	// Build json file
-	handler.Build(buildInfo["path"], buildInfo["name"], buildCount, fields.([]interface{}))
-
+	// Run
+	app.Run()
 }

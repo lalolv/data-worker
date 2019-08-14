@@ -47,13 +47,13 @@ Data worker, data generator, generate a lot data by config.
 }
 ```
 - dict_path: It's a dict folder includes some dict files
-- build: Build parameters
+- build: Build command
 - fields: Setup output a few fields
 
 ### Assign -c parameter，setup config。
 
 ```shell
-data-worker -c ./config/demo.json
+data-worker build -c ./config/demo.json
 ```
 
 

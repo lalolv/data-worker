@@ -45,13 +45,13 @@
 }
 ```
 - dict_path 指定一个存放字典文件的目录
-- build 编译参数
+- build 编译命令
 - fields 设置需要输出哪些字段（名称、类型、字典等）
 
 ### 通过 -c 参数，指定运行的配置文件。
 
 ```shell
-data-worker -c ./config/demo.json
+data-worker build -c ./config/demo.json
 ```
 
 

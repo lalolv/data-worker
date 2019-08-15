@@ -1,0 +1,12 @@
+{
+  "username": {
+    "file": "test.txt",
+    "count": 61,
+    "utime": 0
+  },
+  "email": {
+    "file": "email.txt",
+    "count": 38,
+    "utime": 0
+  }
+}

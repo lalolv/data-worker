@@ -14,7 +14,7 @@
     {
       "name": "name",
       "type": "string",
-      "dict": "usernames"
+      "dict": "username"
     },
     {
       "name": "creat_dt",

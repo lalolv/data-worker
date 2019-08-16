@@ -72,6 +72,51 @@ func ReadLines(reCount, rowCount float64, path string) []string {
 	}
 	defer ff.Close()
 
+	// progress bar
+	p := progress.Bar(int(rowCount))
+	p.Start()
+
+	var list []string
+	if reCount >= rowCount {
+		list = readByLoop(ff, p, reCount, rowCount)
+	} else {
+		list = readBySection(ff, p, reCount, rowCount)
+	}
+
+	p.Finish()
+
+	return list
+}
+
+// if reCount >= rowCount
+func readByLoop(ff *os.File, p *progress.Progress, reCount, rowCount float64) []string {
+	var list []string
+	// scan line
+	var allText []string
+	scanner := bufio.NewScanner(ff)
+	for scanner.Scan() {
+		allText = append(allText, scanner.Text())
+	}
+	// Add N all text
+	for i := 0; i < int(math.Floor(rowCount/reCount)); i++ {
+		list = append(list, allText...)
+		// progress
+		time.Sleep(time.Millisecond * 100)
+		p.Advance(uint(len(allText)))
+	}
+	// Add other text
+	restIndex := int(reCount - rowCount - 1)
+	list = append(list, allText[0:restIndex]...)
+	// progress
+	time.Sleep(time.Millisecond * 100)
+	p.Advance(uint(restIndex))
+
+	return list
+}
+
+// By section
+// if reCount < rowCount
+func readBySection(ff *os.File, p *progress.Progress, reCount, rowCount float64) []string {
 	// a block count
 	b0 := 0
 	bn := int(math.Floor(rowCount / reCount))
@@ -81,10 +126,6 @@ func ReadLines(reCount, rowCount float64, path string) []string {
 
 	// scan line
 	scanner := bufio.NewScanner(ff)
-
-	// progress bar
-	p := progress.Bar(int(rowCount))
-	p.Start()
 
 	// return list
 	var list []string
@@ -109,8 +150,6 @@ func ReadLines(reCount, rowCount float64, path string) []string {
 		time.Sleep(time.Millisecond * 100)
 		p.Advance()
 	}
-
-	p.Finish()
 
 	return list
 }

@@ -1,5 +1,7 @@
 # Overview
 
+[![](https://travis-ci.org/lalolv/data-worker.svg?branch=master)](https://travis-ci.org/lalolv/data-worker)
+
 Data worker, data generator, generate a lot data by config.
 
 [中文说明](./README_ZH.md)

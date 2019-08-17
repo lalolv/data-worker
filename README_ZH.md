@@ -1,5 +1,7 @@
 # 概要
 
+[![](https://travis-ci.org/lalolv/data-worker.svg?branch=master)](https://travis-ci.org/lalolv/data-worker)
+
 数据工人，数据生成器。通过配置文件，可以批量生成一系列随机数据。
 
 ## 应用场景

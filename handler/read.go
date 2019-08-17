@@ -42,20 +42,26 @@ func LoadDicts(fields []interface{}, reCount float64, dictPath string) {
 }
 
 func readDictList(dictPath string) map[string]interface{} {
+	// Empty
+	empty := map[string]interface{}{}
+	// List file path
 	listFile := fmt.Sprintf("./%s/.list.json", dictPath)
 	// Check path exist
 	if !CheckPathIsExist(listFile) {
 		fmt.Println("No find dict list file!")
-		return map[string]interface{}{}
+		return empty
 	}
 
 	data, err := ioutil.ReadFile(listFile)
 	if err != nil {
-		return map[string]interface{}{}
+		return empty
 	}
 
 	var dictMap map[string]interface{}
-	json.Unmarshal(data, &dictMap)
+	err = json.Unmarshal(data, &dictMap)
+	if err != nil {
+		return empty
+	}
 
 	return dictMap
 }

@@ -98,14 +98,15 @@ func readByLoop(ff *os.File, p *progress.Progress, reCount, rowCount float64) []
 		allText = append(allText, scanner.Text())
 	}
 	// Add N all text
-	for i := 0; i < int(math.Floor(rowCount/reCount)); i++ {
+	loopN := math.Floor(reCount / rowCount)
+	for i := 0; i < int(loopN); i++ {
 		list = append(list, allText...)
 		// progress
 		time.Sleep(time.Millisecond * 100)
 		p.Advance(uint(len(allText)))
 	}
 	// Add other text
-	restIndex := int(reCount - rowCount - 1)
+	restIndex := int(reCount - rowCount*loopN)
 	list = append(list, allText[0:restIndex]...)
 	// progress
 	time.Sleep(time.Millisecond * 100)
@@ -119,7 +120,7 @@ func readByLoop(ff *os.File, p *progress.Progress, reCount, rowCount float64) []
 func readBySection(ff *os.File, p *progress.Progress, reCount, rowCount float64) []string {
 	// a block count
 	b0 := 0
-	bn := int(math.Floor(rowCount / reCount))
+	bn := int(math.Floor(rowCount/reCount)) - 1
 	// rand index
 	workers.Seed(0)
 	index := workers.Number(b0, b0+bn)

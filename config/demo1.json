@@ -1,7 +1,7 @@
 {
   "dict_path": "dict",
   "build": {
-    "count": 5,
+    "count": 10,
     "format": "json",
     "name": "demo",
     "path": "out"
@@ -15,6 +15,11 @@
       "name": "name",
       "type": "string",
       "dict": "username"
+    },
+    {
+      "name": "email",
+      "type": "string",
+      "dict": "email"
     },
     {
       "name": "creat_dt",

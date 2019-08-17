@@ -9,9 +9,9 @@ func main() {
 	// New app
 	app := gcli.NewApp()
 	app.Version = "0.1.1"
-	app.Description = "Data worker, data generation"
+	app.Description = "Data worker,batch data generator."
 
-	// app.Add(cmd.ExampleCommand())
+	// Add command
 	app.Add(cmd.BuildCommand())
 
 	// Run

@@ -72,7 +72,11 @@ func exportCSV(p *progress.Progress, filePath string, count int, fields []interf
 	}
 	defer fp.Close()
 	// 写入UTF-8 BOM
-	fp.WriteString("\xEF\xBB\xBF")
+	_, err = fp.WriteString("\xEF\xBB\xBF")
+	if err != nil {
+		fmt.Println("Write UTF-8 BOM err:", err.Error())
+		return
+	}
 	// New writer
 	w := csv.NewWriter(fp)
 
@@ -84,13 +88,21 @@ func exportCSV(p *progress.Progress, filePath string, count int, fields []interf
 			headers = append(headers, field["name"].(string))
 		}
 	}
-	w.Write(headers)
+	err = w.Write(headers)
+	if err != nil {
+		fmt.Println("Write heades err:", err.Error())
+		return
+	}
 
 	// Add data list
 	for i := 0; i < count; i++ {
 		// Generate a row data
 		row := GenRowStrings(i, fields)
-		w.Write(row)
+		err = w.Write(row)
+		if err != nil {
+			fmt.Println("Write row data err:", err.Error())
+			break
+		}
 		time.Sleep(time.Millisecond * 100)
 		p.Advance()
 	}

@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"encoding/csv"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -11,41 +12,88 @@ import (
 )
 
 // Build 编译输出json文件
-func Build(filePath, fileName string, count int, fields []interface{}) {
-	// rows
-	rows := []map[string]interface{}{}
-	// Progressbar
-	p := progress.Bar(count)
-	p.Start()
-	// Add rows list
-	for i := 0; i < count; i++ {
-		// Generate a row data
-		row := GenRow(i, fields)
-		rows = append(rows, row)
-		time.Sleep(time.Millisecond * 100)
-		p.Advance()
-	}
-	p.Finish()
-
+func Build(outDir, fileName, fileExt string, count int, fields []interface{}) {
 	// File full name
-	file := fmt.Sprintf("./%s/%s.json", filePath, fileName)
-	fmt.Println("Generate json file: ", file)
+	filePath := fmt.Sprintf("./%s/%s.%s", outDir, fileName, fileExt)
+	fmt.Println("Creating data file: ", filePath)
 	// Check path exist
-	if !CheckPathIsExist(filePath) {
-		err := os.Mkdir(filePath, os.ModePerm)
+	if !CheckPathIsExist(outDir) {
+		err := os.Mkdir(outDir, os.ModePerm)
 		if err != nil {
 			fmt.Println("Create dir err:", err.Error())
 		}
 	}
+
+	// Progressbar
+	p := progress.Bar(count)
+	p.Start()
+
+	// Export
+	switch fileExt {
+	case "json":
+		exportJSON(p, filePath, count, fields)
+	case "csv":
+		exportCSV(p, filePath, count, fields)
+	}
+
+	p.Finish()
+
+}
+
+func exportJSON(p *progress.Progress, filePath string, count int, fields []interface{}) {
+	// rows
+	rows := []map[string]interface{}{}
+	// Add rows list
+	for i := 0; i < count; i++ {
+		// Generate a row data
+		row := GenRowMap(i, fields)
+		rows = append(rows, row)
+		time.Sleep(time.Millisecond * 100)
+		p.Advance()
+	}
+
 	// Build file in path
 	b, err := json.Marshal(rows)
 	if err != nil {
 		fmt.Println("json err:", err)
 	}
-	// fmt.Println(string(b))
-	err = ioutil.WriteFile("./out/demo.json", b, 0666)
+	err = ioutil.WriteFile(filePath, b, 0666)
 	if err != nil {
 		fmt.Println("Write json file err:", err.Error())
 	}
 	fmt.Println("OK!")
+}
+
+func exportCSV(p *progress.Progress, filePath string, count int, fields []interface{}) {
+	fp, err := os.Create(filePath) // 创建文件句柄
+	if err != nil {
+		fmt.Println("Create file err:", err.Error())
+		return
+	}
+	defer fp.Close()
+	// 写入UTF-8 BOM
+	fp.WriteString("\xEF\xBB\xBF")
+	// New writer
+	w := csv.NewWriter(fp)
+
+	// Add header
+	headers := []string{}
+	for _, v := range fields {
+		field, ok := v.(map[string]interface{})
+		if ok {
+			headers = append(headers, field["name"].(string))
+		}
+	}
+	w.Write(headers)
+
+	// Add data list
+	for i := 0; i < count; i++ {
+		// Generate a row data
+		row := GenRowStrings(i, fields)
+		w.Write(row)
+		time.Sleep(time.Millisecond * 100)
+		p.Advance()
+	}
+
+	w.Flush()
 }

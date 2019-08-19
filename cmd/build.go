@@ -53,7 +53,7 @@ func buildExecute(c *gcli.Command, args []string) error {
 	handler.LoadDicts(fields.([]interface{}), float64(buildCount), dictPath)
 
 	// Build json file
-	handler.Build(buildInfo["path"], buildInfo["name"], buildCount, fields.([]interface{}))
+	handler.Build(buildInfo["path"], buildInfo["name"], buildInfo["format"], buildCount, fields.([]interface{}))
 
 	return nil
 }

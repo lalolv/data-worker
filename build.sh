@@ -1,4 +1,4 @@
-version=v0.2.0
+version=v0.3.0
 LFILE=./release/$version/data-worker
 
 echo "Start build amd64 version for Linux ..."

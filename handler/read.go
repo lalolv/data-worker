@@ -108,14 +108,14 @@ func readByLoop(ff *os.File, p *progress.Progress, reCount, rowCount float64) []
 	for i := 0; i < int(loopN); i++ {
 		list = append(list, allText...)
 		// progress
-		time.Sleep(time.Millisecond * 100)
+		time.Sleep(time.Millisecond * SLEEP_DELAY)
 		p.Advance(uint(len(allText)))
 	}
 	// Add other text
 	restIndex := int(reCount - rowCount*loopN)
 	list = append(list, allText[0:restIndex]...)
 	// progress
-	time.Sleep(time.Millisecond * 100)
+	time.Sleep(time.Millisecond * SLEEP_DELAY)
 	p.Advance(uint(restIndex))
 
 	return list
@@ -154,7 +154,7 @@ func readBySection(ff *os.File, p *progress.Progress, reCount, rowCount float64)
 		}
 
 		line++
-		time.Sleep(time.Millisecond * 100)
+		time.Sleep(time.Millisecond * SLEEP_DELAY)
 		p.Advance()
 	}
 

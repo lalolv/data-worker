@@ -8,7 +8,7 @@ import (
 func main() {
 	// New app
 	app := gcli.NewApp()
-	app.Version = "0.1.1"
+	app.Version = "0.3.0"
 	app.Description = "Data worker,batch data generator."
 
 	// Add command

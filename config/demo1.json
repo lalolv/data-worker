@@ -1,8 +1,8 @@
 {
   "dict_path": "dict",
   "build": {
-    "count": 10,
-    "format": "json",
+    "count": 100,
+    "format": "csv",
     "name": "demo",
     "path": "out"
   },

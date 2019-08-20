@@ -48,7 +48,7 @@ func exportJSON(p *progress.Progress, filePath string, count int, fields []inter
 		// Generate a row data
 		row := GenRowMap(i, fields)
 		rows = append(rows, row)
-		time.Sleep(time.Millisecond * 100)
+		time.Sleep(time.Millisecond * SLEEP_DELAY)
 		p.Advance()
 	}
 
@@ -61,7 +61,6 @@ func exportJSON(p *progress.Progress, filePath string, count int, fields []inter
 	if err != nil {
 		fmt.Println("Write json file err:", err.Error())
 	}
-	fmt.Println("OK!")
 }
 
 func exportCSV(p *progress.Progress, filePath string, count int, fields []interface{}) {
@@ -103,7 +102,7 @@ func exportCSV(p *progress.Progress, filePath string, count int, fields []interf
 			fmt.Println("Write row data err:", err.Error())
 			break
 		}
-		time.Sleep(time.Millisecond * 100)
+		time.Sleep(time.Millisecond * SLEEP_DELAY)
 		p.Advance()
 	}
 

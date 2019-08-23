@@ -65,6 +65,11 @@ func getCellVal(field map[string]interface{}, index int) interface{} {
 		case "uuid":
 			// uuid
 			val = workers.UUID()
+		case "mobile":
+			// mobile
+			val = workers.Mobile()
+		case "idno":
+			val = workers.IDNo()
 		case "datetime":
 			// datatime
 			val = workers.Date().Format("2006-01-02 15:04:05")

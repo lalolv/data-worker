@@ -1,7 +1,7 @@
 {
   "dict_path": "dict",
   "build": {
-    "count": 100,
+    "count": 5,
     "format": "csv",
     "name": "demo",
     "path": "out"
@@ -12,14 +12,12 @@
       "type": "uuid"
     },
     {
-      "name": "name",
-      "type": "string",
-      "dict": "username"
+      "name": "mobile",
+      "type": "mobile"
     },
     {
-      "name": "email",
-      "type": "string",
-      "dict": "email"
+      "name": "idno",
+      "type": "idno"
     },
     {
       "name": "creat_dt",

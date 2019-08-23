@@ -3,6 +3,7 @@ package handler
 import (
 	"os"
 
+	"github.com/lalolv/data-worker/utils"
 	"github.com/lalolv/data-worker/workers"
 	"github.com/lalolv/goutil"
 )
@@ -55,7 +56,7 @@ func getCellVal(field map[string]interface{}, index int) interface{} {
 		}
 	} else {
 		// Set rand seed
-		workers.Seed(0)
+		utils.Seed(0)
 		// Get rand by type
 		switch field["type"].(string) {
 		case "string":
@@ -64,6 +65,11 @@ func getCellVal(field map[string]interface{}, index int) interface{} {
 		case "uuid":
 			// uuid
 			val = workers.UUID()
+		case "mobile":
+			// mobile
+			val = workers.Mobile()
+		case "idno":
+			val = workers.IDNo()
 		case "datetime":
 			// datatime
 			val = workers.Date().Format("2006-01-02 15:04:05")

@@ -1,4 +1,4 @@
-package workers
+package utils
 
 import (
 	"math/rand"
@@ -17,15 +17,15 @@ func Seed(seed int64) {
 	}
 }
 
-// Replace # with numbers
-func replaceWithNumbers(str string) string {
+// ReplaceWithNumbers Replace # with numbers
+func ReplaceWithNumbers(str string) string {
 	if str == "" {
 		return str
 	}
 	bytestr := []byte(str)
 	for i := 0; i < len(bytestr); i++ {
 		if bytestr[i] == hashtag {
-			bytestr[i] = byte(randDigit())
+			bytestr[i] = byte(RandDigit())
 		}
 	}
 	if bytestr[0] == '0' {
@@ -35,15 +35,15 @@ func replaceWithNumbers(str string) string {
 	return string(bytestr)
 }
 
-// Replace ? with ASCII lowercase letters
-func replaceWithLetters(str string) string {
+// ReplaceWithLetters Replace ? with ASCII lowercase letters
+func ReplaceWithLetters(str string) string {
 	if str == "" {
 		return str
 	}
 	bytestr := []byte(str)
 	for i := 0; i < len(bytestr); i++ {
 		if bytestr[i] == questionmark {
-			bytestr[i] = byte(randLetter())
+			bytestr[i] = byte(RandLetter())
 		}
 	}
 
@@ -65,8 +65,8 @@ func replaceWithLetters(str string) string {
 // 	return string(bytestr)
 // }
 
-// Generate random lowercase ASCII letter
-func randLetter() rune {
+// RandLetter Generate random lowercase ASCII letter
+func RandLetter() rune {
 	return rune(byte(rand.Intn(26)) + 'a')
 }
 
@@ -75,27 +75,29 @@ func randLetter() rune {
 // 	return rune(byte(rand.Intn(6)) + 'a')
 // }
 
-// Generate random ASCII digit
-func randDigit() rune {
+// RandDigit Generate random ASCII digit
+func RandDigit() rune {
 	return rune(byte(rand.Intn(10)) + '0')
 }
 
-// Generate random integer between min and max
-func randIntRange(min, max int) int {
+// RandIntRange Generate random integer between min and max
+func RandIntRange(min, max int) int {
 	if min == max {
 		return min
 	}
 	return rand.Intn((max+1)-min) + min
 }
 
-func randFloat32Range(min, max float32) float32 {
+// RandFloat32Range Generate random float32 between min and max
+func RandFloat32Range(min, max float32) float32 {
 	if min == max {
 		return min
 	}
 	return rand.Float32()*(max-min) + min
 }
 
-func randFloat64Range(min, max float64) float64 {
+// RandFloat64Range Generate random float64 between min and max
+func RandFloat64Range(min, max float64) float64 {
 	if min == max {
 		return min
 	}

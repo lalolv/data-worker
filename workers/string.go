@@ -1,20 +1,24 @@
 package workers
 
-import "math/rand"
+import (
+	"math/rand"
+
+	"github.com/lalolv/data-worker/utils"
+)
 
 // Letter will generate a single random lower case ASCII letter
 func Letter() string {
-	return string(randLetter())
+	return string(utils.RandLetter())
 }
 
 // Digit will generate a single ASCII digit
 func Digit() string {
-	return string(randDigit())
+	return string(utils.RandDigit())
 }
 
 // Lexify will replace ? will random generated letters
 func Lexify(str string) string {
-	return replaceWithLetters(str)
+	return utils.ReplaceWithLetters(str)
 }
 
 // ShuffleStrings will randomize a slice of strings

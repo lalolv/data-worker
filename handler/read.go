@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"github.com/gookit/gcli/v2/progress"
+	"github.com/lalolv/data-worker/utils"
 	"github.com/lalolv/data-worker/workers"
 	"github.com/lalolv/goutil"
 )
@@ -108,14 +109,14 @@ func readByLoop(ff *os.File, p *progress.Progress, reCount, rowCount float64) []
 	for i := 0; i < int(loopN); i++ {
 		list = append(list, allText...)
 		// progress
-		time.Sleep(time.Millisecond * SLEEP_DELAY)
+		time.Sleep(time.Millisecond * SleepDelay)
 		p.Advance(uint(len(allText)))
 	}
 	// Add other text
 	restIndex := int(reCount - rowCount*loopN)
 	list = append(list, allText[0:restIndex]...)
 	// progress
-	time.Sleep(time.Millisecond * SLEEP_DELAY)
+	time.Sleep(time.Millisecond * SleepDelay)
 	p.Advance(uint(restIndex))
 
 	return list
@@ -128,7 +129,7 @@ func readBySection(ff *os.File, p *progress.Progress, reCount, rowCount float64)
 	b0 := 0
 	bn := int(math.Floor(rowCount/reCount)) - 1
 	// rand index
-	workers.Seed(0)
+	utils.Seed(0)
 	index := workers.Number(b0, b0+bn)
 
 	// scan line
@@ -149,12 +150,12 @@ func readBySection(ff *os.File, p *progress.Progress, reCount, rowCount float64)
 			// update index
 			b0 += bn + 1
 			// rand index
-			workers.Seed(0)
+			utils.Seed(0)
 			index = workers.Number(b0, b0+bn)
 		}
 
 		line++
-		time.Sleep(time.Millisecond * SLEEP_DELAY)
+		time.Sleep(time.Millisecond * SleepDelay)
 		p.Advance()
 	}
 

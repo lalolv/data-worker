@@ -1,6 +1,7 @@
 # Overview
 
-[![](https://travis-ci.org/lalolv/data-worker.svg?branch=master)](https://travis-ci.org/lalolv/data-worker)
+[![alt travis](https://travis-ci.org/lalolv/data-worker.svg?branch=master)](https://travis-ci.org/lalolv/data-worker)
+[![alt report](https://goreportcard.com/badge/github.com/lalolv/data-worker)](https://goreportcard.com/report/github.com/lalolv/data-worker)
 
 Data worker, data generator, generate a lot data by config.
 
@@ -16,7 +17,6 @@ Data worker, data generator, generate a lot data by config.
 
 - [x] Define some specified fields and parameters by config.
 - [x] Load external dict to use more data.
-
 
 ## Usage
 
@@ -48,6 +48,7 @@ Data worker, data generator, generate a lot data by config.
   ]
 }
 ```
+
 - dict_path: It's a dict folder includes some dict files
 - build: Build command
 - fields: Setup output a few fields
@@ -57,7 +58,6 @@ Data worker, data generator, generate a lot data by config.
 ```shell
 data-worker build -c ./config/demo.json
 ```
-
 
 ## Plan
 

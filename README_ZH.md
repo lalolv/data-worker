@@ -1,6 +1,7 @@
 # 概要
 
-[![](https://travis-ci.org/lalolv/data-worker.svg?branch=master)](https://travis-ci.org/lalolv/data-worker)
+[![alt travis](https://travis-ci.org/lalolv/data-worker.svg?branch=master)](https://travis-ci.org/lalolv/data-worker)
+[![alt report](https://goreportcard.com/badge/github.com/lalolv/data-worker)](https://goreportcard.com/report/github.com/lalolv/data-worker)
 
 数据工人，数据生成器。通过配置文件，可以批量生成一系列随机数据。
 
@@ -14,7 +15,6 @@
 
 - [x] 配置文件，定义输出的字段和一些参数。
 - [x] 加载外部字典，获取更多数据。
-
 
 ## 如何使用
 
@@ -46,6 +46,7 @@
   ]
 }
 ```
+
 - dict_path 指定一个存放字典文件的目录
 - build 编译命令
 - fields 设置需要输出哪些字段（名称、类型、字典等）
@@ -55,7 +56,6 @@
 ```shell
 data-worker build -c ./config/demo.json
 ```
-
 
 ## 计划
 

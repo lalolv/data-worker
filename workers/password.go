@@ -5,7 +5,7 @@ import "math/rand"
 const lowerStr = "abcdefghijklmnopqrstuvwxyz"
 const upperStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 const numericStr = "0123456789"
-const specialStr = "!@#$%&*+-=?"
+const specialStr = "!#$%&*+-=?"
 const spaceStr = "   "
 
 // Password will generate a random password

@@ -22,24 +22,78 @@ func LoadDicts(fields []interface{}, reCount float64, dictPath string) {
 	dictMaps := readDictList(dictPath)
 	// for each field
 	for _, v := range fields {
-		val, ok := v.(map[string]interface{})
+		field, ok := v.(map[string]interface{})
 		if ok {
-			if dict, ok := val["dict"]; ok {
-				// Get dict info from list
-				dictMap := dictMaps[dict.(string)].(map[string]interface{})
-				// read data
-				fieldsName := val["name"].(string)
-				fmt.Println("Loading data for", fieldsName)
-				// Read data
-				count, _ := goutil.ToFloat64(dictMap["count"])
-				dataColl := ReadLines(reCount, count, fmt.Sprintf("./%s/%s", dictPath, dictMap["file"]))
-				// Rand data
-				workers.ShuffleStrings(dataColl)
-				// Add to dict
-				dictData[fieldsName] = dataColl
-			}
+			// read data
+			fieldName := field["name"].(string)
+			fieldValue := field["value"].(string)
+			fmt.Println("Loading data for", fieldName)
+			loadFieldData(fieldName, fieldValue, dictPath, dictMaps, reCount)
 		}
 	}
+}
+
+// loadFieldData 解析字典字段
+// @value 每个字段的值
+// @dictMaps 字典列表，用来判断类型是否是字典
+func loadFieldData(fieldName, fieldValue, dictPath string, dictMaps map[string]interface{}, reCount float64) {
+	i := 0
+	for {
+		start := IndexStart(fieldValue, "{", i)
+		if start <= 0 {
+			break
+		}
+		end := IndexStart(fieldValue, "}", start)
+
+		// 字段名称
+		dictKey := fieldValue[start+1 : end]
+		// Get dict info from list
+		dictMap := dictMaps[dictKey].(map[string]interface{})
+
+		// Read data
+		count, _ := goutil.ToFloat64(dictMap["count"])
+		dataColl := ReadLines(reCount, count, fmt.Sprintf("./%s/%s", dictPath, dictMap["file"]))
+		// Rand data
+		workers.ShuffleStrings(dataColl)
+		// Add to dict
+		// key 的格式：字段名.字典名
+		fullKey := fmt.Sprintf("%s.%s", fieldName, dictKey)
+		dictData[fullKey] = dataColl
+
+		// 确定下次查找位置
+		i = end
+	}
+
+}
+
+// IndexStart returns the index of the first instance of sep in s from a start position,
+// or -1 if sep is not present in s.
+func IndexStart(s, sep string, start int) int {
+	if start < 0 {
+		start = 0
+	}
+	n := len(sep)
+	size := len(s)
+	if n == 0 {
+		return 0
+	}
+	c := sep[0]
+	if n == 1 {
+		// special case worth making fast
+		for i := start; i < size; i++ {
+			if s[i] == c {
+				return i
+			}
+		}
+		return -1
+	}
+	// n > 1
+	for i := start; i+n <= size; i++ {
+		if s[i] == c && s[i:i+n] == sep {
+			return i
+		}
+	}
+	return -1
 }
 
 func readDictList(dictPath string) map[string]interface{} {
@@ -68,8 +122,8 @@ func readDictList(dictPath string) map[string]interface{} {
 }
 
 // ReadLines Read a few line
-// @reCount return count
-// @rowCount dict file row count
+// reCount return count
+// rowCount dict file row count
 func ReadLines(reCount, rowCount float64, path string) []string {
 	// open file
 	ff, err := os.Open(path)

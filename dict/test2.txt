@@ -1,4 +1,4 @@
-@qq.com
-@163.com
-@126.com
-@gmail.com
+qq.com
+163.com
+126.com
+gmail.com

@@ -1,7 +1,9 @@
 package handler
 
 import (
+	"fmt"
 	"os"
+	"strings"
 
 	"github.com/lalolv/data-worker/utils"
 	"github.com/lalolv/data-worker/workers"
@@ -48,33 +50,61 @@ func GenRowStrings(index int, fields []interface{}) []string {
 
 // Get a cell value
 func getCellVal(field map[string]interface{}, index int) interface{} {
-	val := ""
-	// Use dict data
-	if _, ok := field["dict"]; ok {
-		if dataColl, ok := dictData[field["name"].(string)]; ok {
-			val = dataColl[index]
+	val := field["value"].(string)
+
+	for _, key := range parseFieldValue(field["value"].(string)) {
+		var newVal string
+		fullKey := fmt.Sprintf("%s.%s", field["name"].(string), key)
+		if dataColl, ok := dictData[fullKey]; ok {
+			newVal = dataColl[index]
+		} else {
+			// Set rand seed
+			utils.Seed(0)
+			// Get rand by type
+			switch field["type"].(string) {
+			case "string":
+				// gen rand string
+				newVal = workers.Letter()
+			case "uuid":
+				// uuid
+				newVal = workers.UUID()
+			case "mobile":
+				// mobile
+				newVal = workers.Mobile()
+			case "idno":
+				newVal = workers.IDNo()
+			case "datetime":
+				// datatime
+				newVal = workers.Date().Format("2006-01-02 15:04:05")
+			default:
+				newVal = ""
+			}
 		}
-	} else {
-		// Set rand seed
-		utils.Seed(0)
-		// Get rand by type
-		switch field["type"].(string) {
-		case "string":
-			// gen rand string
-			val = workers.Letter()
-		case "uuid":
-			// uuid
-			val = workers.UUID()
-		case "mobile":
-			// mobile
-			val = workers.Mobile()
-		case "idno":
-			val = workers.IDNo()
-		case "datetime":
-			// datatime
-			val = workers.Date().Format("2006-01-02 15:04:05")
-		}
+
+		// 替换
+		oldVal := fmt.Sprintf("{%s}", key)
+		val = strings.Replace(val, oldVal, newVal, -1)
 	}
 
 	return val
+}
+
+// 解析出每个字段值的字典key
+func parseFieldValue(val string) []string {
+	keys := []string{}
+
+	i := 0
+	for {
+		start := IndexStart(val, "{", i)
+		if start <= 0 {
+			break
+		}
+		end := IndexStart(val, "}", start)
+
+		// 字段名称
+		keys = append(keys, val[start+1:end])
+		i = end
+	}
+
+	return keys
 }

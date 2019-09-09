@@ -51,8 +51,7 @@ func GenRowStrings(index int, fields []interface{}) []string {
 // Get a cell value
 func getCellVal(field map[string]interface{}, index int) interface{} {
 	val := field["value"].(string)
-
-	for _, key := range parseFieldValue(field["value"].(string)) {
+	for _, key := range parseFieldValue(val) {
 		var newVal string
 		fullKey := fmt.Sprintf("%s.%s", field["name"].(string), key)
 		if dataColl, ok := dictData[fullKey]; ok {
@@ -61,7 +60,7 @@ func getCellVal(field map[string]interface{}, index int) interface{} {
 			// Set rand seed
 			utils.Seed(0)
 			// Get rand by type
-			switch field["type"].(string) {
+			switch key {
 			case "string":
 				// gen rand string
 				newVal = workers.Letter()
@@ -96,7 +95,7 @@ func parseFieldValue(val string) []string {
 	i := 0
 	for {
 		start := IndexStart(val, "{", i)
-		if start <= 0 {
+		if start < 0 {
 			break
 		}
 		end := IndexStart(val, "}", start)

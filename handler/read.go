@@ -40,25 +40,27 @@ func loadFieldData(fieldName, fieldValue, dictPath string, dictMaps map[string]i
 	i := 0
 	for {
 		start := IndexStart(fieldValue, "{", i)
-		if start <= 0 {
+		if start < 0 {
 			break
 		}
 		end := IndexStart(fieldValue, "}", start)
 
 		// 字段名称
 		dictKey := fieldValue[start+1 : end]
-		// Get dict info from list
-		dictMap := dictMaps[dictKey].(map[string]interface{})
-
-		// Read data
-		count, _ := goutil.ToFloat64(dictMap["count"])
-		dataColl := ReadLines(reCount, count, fmt.Sprintf("./%s/%s", dictPath, dictMap["file"]))
-		// Rand data
-		workers.ShuffleStrings(dataColl)
-		// Add to dict
-		// key 的格式：字段名.字典名
-		fullKey := fmt.Sprintf("%s.%s", fieldName, dictKey)
-		dictData[fullKey] = dataColl
+		// 判断key是否字典
+		if goutil.InStringArray(DictKeys, dictKey, nil) {
+			// Get dict info from list
+			dictMap := dictMaps[dictKey].(map[string]interface{})
+			// Read data
+			count, _ := goutil.ToFloat64(dictMap["count"])
+			dataColl := ReadLines(reCount, count, fmt.Sprintf("./%s/%s", dictPath, dictMap["file"]))
+			// Rand data
+			workers.ShuffleStrings(dataColl)
+			// Add to dict
+			// key 的格式：字段名.字典名
+			fullKey := fmt.Sprintf("%s.%s", fieldName, dictKey)
+			dictData[fullKey] = dataColl
+		}
 
 		// 确定下次查找位置
 		i = end

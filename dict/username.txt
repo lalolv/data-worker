@@ -2392,7 +2392,7 @@ builduser
 bula
 bull
 buna
-BUNdAS@#$RT%GQ~EQW#%^QW
+BUNdAS#$RT%GQ~EQW#%^QW
 bunic
 bunny
 buobianyo
@@ -6143,7 +6143,7 @@ fullhouse
 fullickm
 Fulop
 fulton
-Fum4tulP0@t3Uc1d3R4uD3T0t!@#$%^%^&*?
+Fum4tulP0t3Uc1d3R4uD3T0t!#$%^%^&*?
 fun
 funftp1
 fungping
@@ -9040,7 +9040,7 @@ khuong
 khurram
 khurshid
 khyun
-Ki!l|iN6#Th3Ph03$%nix@NdR3b!irD
+Ki!l|iN6#Th3Ph03$%nixNdR3b!irD
 kia
 kiabex
 kiah
@@ -12712,7 +12712,7 @@ p003
 p004
 p005
 p006
-p0w3rOF//Rullers@?%?%-00
+p0w3rOF//Rullers?%?%-00
 p2ptest
 p8ud
 pabitrak
@@ -18093,10 +18093,10 @@ wwsd
 wwseo
 www
 www-data
-www.netbank.cn!@#
+www.netbank.cn!#
 www1
 www16ps
-www@123
+www123
 wwwadmin
 wwwdata
 wwwportal

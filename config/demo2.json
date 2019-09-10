@@ -1,0 +1,23 @@
+{
+  "dict_path": "dict",
+  "build": {
+    "count": 5,
+    "format": "csv",
+    "name": "demo2",
+    "path": "out"
+  },
+  "fields": [
+    {
+      "name": "order_id",
+      "value": "po-{uuid}"
+    },
+    {
+      "name": "email",
+      "value": "{username}@{email}"
+    },
+    {
+      "name": "creat_dt",
+      "value": "{datetime}"
+    }
+  ]
+}

@@ -15,33 +15,33 @@
 
 - [x] 配置文件，定义输出的字段和一些参数。
 - [x] 加载外部字典，获取更多数据。
+- [x] 自定义格式化输出数据
 
 ## 如何使用
 
-### 创建一个 json 格式的配置文件，保存在 config 目录。例如：
+### 创建一个 json 格式的配置文件，保存在 config 目录
 
 ```json
 {
   "dict_path": "dict",
   "build": {
     "count": 5,
-    "format": "json",
-    "name": "demo",
+    "format": "csv",
+    "name": "demo2",
     "path": "out"
   },
   "fields": [
     {
-      "name": "id",
-      "type": "uuid"
+      "name": "order_id",
+      "value": "po-{uuid}"
     },
     {
-      "name": "name",
-      "type": "string",
-      "dict": "usernames"
+      "name": "email",
+      "value": "{username}@{email}"
     },
     {
       "name": "creat_dt",
-      "type": "datetime"
+      "value": "{datetime}"
     }
   ]
 }
@@ -50,14 +50,25 @@
 - dict_path 指定一个存放字典文件的目录
 - build 编译命令
 - fields 设置需要输出哪些字段（名称、类型、字典等）
+- 使用大括号，自定义输出变量。变量来自数据字典和内置类型。
 
-### 通过 -c 参数，指定运行的配置文件。
+### 通过 -c 参数，指定运行的配置文件
 
 ```shell
 data-worker build -c ./config/demo.json
 ```
 
+## 内置类型
+
+| 类型     |      说明      |
+| -------- | :------------: |
+| string   |     字符串     |
+| uuid     |  唯一识别 ID   |
+| mobile   |    手机号码    |
+| idno     |    身份证号    |
+| datetime | 完整的日期时间 |
+
 ## 计划
 
-- 输出 cvs 文件格式
-- 邮箱域名字典，支持邮件地址的生成
+- [ ] 自定义变量，增加过滤条件
+- [ ] 支持更多的内置类型

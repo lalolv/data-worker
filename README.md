@@ -7,43 +7,43 @@ Data worker, data generator, generate a lot data by config.
 
 [中文说明](./README_ZH.md)
 
-## Where is for?
+## Application scenario
 
 - Data test
-- Demo
+- Demonstration
 - Unit Test for developing
 
 ## Features
 
 - [x] Define some specified fields and parameters by config.
 - [x] Load external dict to use more data.
+- [x] Custom formatted output data
 
 ## Usage
 
-### Create a json file for config，and save to config folder。for example：
+### Create a json file for config，and save to config folder。for example
 
 ```json
 {
   "dict_path": "dict",
   "build": {
     "count": 5,
-    "format": "json",
-    "name": "demo",
+    "format": "csv",
+    "name": "demo2",
     "path": "out"
   },
   "fields": [
     {
-      "name": "id",
-      "type": "uuid"
+      "name": "order_id",
+      "value": "po-{uuid}"
     },
     {
-      "name": "name",
-      "type": "string",
-      "dict": "usernames"
+      "name": "email",
+      "value": "{username}@{email}"
     },
     {
       "name": "creat_dt",
-      "type": "datetime"
+      "value": "{datetime}"
     }
   ]
 }
@@ -52,14 +52,25 @@ Data worker, data generator, generate a lot data by config.
 - dict_path: It's a dict folder includes some dict files
 - build: Build command
 - fields: Setup output a few fields
+- Use curly braces to customize the output variables. Variables come from data dictionaries and built-in types.
 
-### Assign -c parameter，setup config。
+### Assign -c parameter，setup config
 
 ```shell
 data-worker build -c ./config/demo.json
 ```
 
+## Built-in types
+
+| Type     |         Desc          |
+| -------- | :-------------------: |
+| string   |        String         |
+| uuid     | Unique identification |
+| mobile   |     Mobile phone      |
+| idno     |       ID Number       |
+| datetime |  Full date and time   |
+
 ## Plan
 
-- Output cvs file
-- Suport generate email address
+- [ ] Custom variables, increase filters.
+- [ ] Support for more built-in types

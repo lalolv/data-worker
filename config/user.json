@@ -1,0 +1,39 @@
+{
+  "dict_path": "dict",
+  "build": {
+    "count": 10,
+    "format": "json",
+    "name": "gd40-user",
+    "path": "out"
+  },
+  "fields": [
+    {
+      "name": "mobile",
+      "value": "{mobile}"
+    },
+    {
+      "name": "pwd",
+      "value": "FAE0B27C451C728867A567E8C1BB4E53"
+    },
+    {
+      "name": "name",
+      "value": "{username}"
+    },
+    {
+      "name": "avatar",
+      "value": "{avatar}"
+    },
+    {
+      "name": "email",
+      "value": "{username}@{email}"
+    },
+    {
+      "name": "post",
+      "value": "{post}"
+    },
+    {
+      "name": "creat_dt",
+      "value": "{datetime}"
+    }
+  ]
+}

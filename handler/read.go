@@ -48,7 +48,7 @@ func loadFieldData(fieldName, fieldValue, dictPath string, dictMaps map[string]i
 		// 字段名称
 		dictKey := fieldValue[start+1 : end]
 		// 判断key是否字典
-		if goutil.InStringArray(DictKeys, dictKey, nil) {
+		if inKeys(dictKey, dictMaps) {
 			// Get dict info from list
 			dictMap := dictMaps[dictKey].(map[string]interface{})
 			// Read data
@@ -65,7 +65,19 @@ func loadFieldData(fieldName, fieldValue, dictPath string, dictMaps map[string]i
 		// 确定下次查找位置
 		i = end
 	}
+}
 
+func inKeys(dictKey string, dictMaps map[string]interface{}) bool {
+	var isKey bool
+
+	for k := range dictMaps {
+		if k == dictKey {
+			isKey = true
+			break
+		}
+	}
+
+	return isKey
 }
 
 // IndexStart returns the index of the first instance of sep in s from a start position,

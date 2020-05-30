@@ -1,0 +1,15 @@
+{
+  "dict_path": "dict",
+  "build": {
+    "count": 3,
+    "format": "json",
+    "name": "user",
+    "path": "out"
+  },
+  "fields": [
+    {
+      "name": "avatar",
+      "value": "{avatar}"
+    }
+  ]
+}

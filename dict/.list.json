@@ -8,5 +8,15 @@
     "file": "email.txt",
     "count": 38,
     "utime": 0
+  },
+  "avatar": {
+    "file": "avatar.txt",
+    "count": 21,
+    "utime": 0
+  },
+  "post": {
+    "file": "post.txt",
+    "count": 26,
+    "utime": 0
   }
 }
